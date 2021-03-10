@@ -322,12 +322,6 @@ BOOL xf_detect_monitors(xfContext* xfc, UINT32* pMaxWidth, UINT32* pMaxHeight)
 			*pMaxHeight = vscreen->monitors[current_monitor].area.bottom -
 			              vscreen->monitors[current_monitor].area.top + 1;
 
-			if (settings->PercentScreenUseWidth)
-				*pMaxWidth = ((vscreen->monitors[current_monitor].area.right -
-				               vscreen->monitors[current_monitor].area.left + 1) *
-				              settings->PercentScreen) /
-				             100;
-
 			if (settings->PercentScreenUseHeight)
 				*pMaxHeight = ((vscreen->monitors[current_monitor].area.bottom -
 				                vscreen->monitors[current_monitor].area.top + 1) *
@@ -338,9 +332,6 @@ BOOL xf_detect_monitors(xfContext* xfc, UINT32* pMaxWidth, UINT32* pMaxHeight)
 		{
 			*pMaxWidth = xfc->workArea.width;
 			*pMaxHeight = xfc->workArea.height;
-
-			if (settings->PercentScreenUseWidth)
-				*pMaxWidth = (xfc->workArea.width * settings->PercentScreen) / 100;
 
 			if (settings->PercentScreenUseHeight)
 				*pMaxHeight = (xfc->workArea.height * settings->PercentScreen) / 100;
@@ -368,17 +359,13 @@ BOOL xf_detect_monitors(xfContext* xfc, UINT32* pMaxWidth, UINT32* pMaxHeight)
 				return FALSE;
 
 			settings->MonitorDefArray[nmonitors].x =
-			    (vscreen->monitors[i].area.left *
-			     (settings->PercentScreenUseWidth ? settings->PercentScreen : 100)) /
-			    100;
+			    vscreen->monitors[i].area.left;
 			settings->MonitorDefArray[nmonitors].y =
 			    (vscreen->monitors[i].area.top *
 			     (settings->PercentScreenUseHeight ? settings->PercentScreen : 100)) /
 			    100;
 			settings->MonitorDefArray[nmonitors].width =
-			    ((vscreen->monitors[i].area.right - vscreen->monitors[i].area.left + 1) *
-			     (settings->PercentScreenUseWidth ? settings->PercentScreen : 100)) /
-			    100;
+			    vscreen->monitors[i].area.right - vscreen->monitors[i].area.left + 1;
 			settings->MonitorDefArray[nmonitors].height =
 			    ((vscreen->monitors[i].area.bottom - vscreen->monitors[i].area.top + 1) *
 			     (settings->PercentScreenUseWidth ? settings->PercentScreen : 100)) /

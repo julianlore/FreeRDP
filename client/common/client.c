@@ -200,7 +200,7 @@ static BOOL freerdp_client_settings_post_process(rdpSettings* settings)
 	}
 	else if (settings->UseMultimon)
 	{
-		settings->Fullscreen = TRUE;
+		settings->Fullscreen = FALSE;
 	}
 
 	return TRUE;
